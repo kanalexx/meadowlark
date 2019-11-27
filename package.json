@@ -1,0 +1,25 @@
+{
+  "name": "meadowlark",
+  "version": "1.0.0",
+  "description": "It's training site for JavaScript learning.",
+  "main": "meadowlark.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanalexx/meadowlark.git"
+  },
+  "keywords": [
+    "JavaScript"
+  ],
+  "author": "KanAlexx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kanalexx/meadowlark/issues"
+  },
+  "homepage": "https://github.com/kanalexx/meadowlark#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
