@@ -7,16 +7,27 @@ var handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+var fortunes = [
+    "Победи свои страхи, или они победят тебя.",
+    "Рекам нужны истоки.",
+    "Тебя ждет приятный сюрприз",
+    "Будь проще везде, где только можно."
+];
+
+// провайдер статического содержимого
 app.use(express.static(__dirname + '/public'));
 
+// установка порта для сервера
 app.set('port', process.env.PORT || 3000);
 
+// маршруты
 app.get('/', function(req, res){
     res.render('home');
 });
 
 app.get('/about', function(req, res){
-    res.render('about');
+    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    res.render('about', {fortune: randomFortune});
 });
 
 // пользовательская страница 404
