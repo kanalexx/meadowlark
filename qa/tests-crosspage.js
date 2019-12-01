@@ -1,3 +1,6 @@
+// Межстраницные тесты
+// Запуск в командной строке:
+// > mocha -u tdd -R spec qa/tests-crosspage.js 2>/dev/null
 var Browser = require('zombie');
 var assert = require('chai').assert;
 
