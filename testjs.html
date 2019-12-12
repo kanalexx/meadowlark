@@ -45,9 +45,17 @@
     logArr("Список степеней тройки", degreeThreeList(25))  */
    
     const random = (min, max) => (min + Math.random()*(max-min)).toFixed(2)    
+    // генератор события
     const event = chance => () => Math.random().toFixed(2) < chance/100
+    // шанс (%)
     const chance = 30
+    // количество испытаний
+    const testCount = 1000
+    // количество попыток в испытании 
+    const setSize = 3
+    // генератор события с шансом упеха 30%
     const event30 = event(chance)
+    // тестовый набор 
     const testSet = (event, size) => {
         let set = []
         for(let i=0; i<size; i++) {
@@ -55,26 +63,26 @@
         }
         return set
     }
+    // количество успешных исходов в тестовом наборе
     const luckyCount = testSet => testSet.filter(value => value==true).length
+    // набор испытаний
     const testCase = (event, testCount, setSize) => {
         let result = []
         for(let i=0; i<testCount; i++) {
-            result.push(luckyCount(testSet(event, setSize)))
+            const count = luckyCount(testSet(event, setSize))            
+            result.push(count != 0)
         }
         return result
     }
+    // среднее арифметическое
     const avg = set => parseFloat((set.reduce((prev, avg) => avg + prev) / set.length).toFixed(2))
-
-    const testCount = 1000
-    const setSize = 3
-
-    //log(avg(testCase(event30, testCount, setSize)))
+    //        
     const res = []
     for(let i=0; i<10; i++) {
-        res.push(avg(testCase(event30, testCount, setSize)))
+        res.push(luckyCount(testCase(event30, testCount, setSize)) / testCount)        
         log(res[res.length - 1])
     }
-    log(`количество попаданий с шансом ${chance}% из ${setSize} выстрелов: ${avg(res)}`)
+    log(`средняя вероятность хотя бы раз попасть с вероятностью ${chance}% из ${setSize} выстрелов: ${avg(res)*100}%`)
 </script>
 </body>
 </html>
