@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Declarative Clock</title>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+<body>
+<h1>Declarative Clock</h1>
+<p>Open the console to check the time.</p>
+<script type="text/babel">
+    const log = (message) => console.log(message)
+    const logArr = (caption, arr) => 
+        log(`${caption}\n${arr.join(",")}`)
+
+    const listFunc = (next, accept = (value) => true) => {
+        const func = (count, value = 1, list=[]) =>
+            (list.length < count) ?
+                accept(value) ?
+                func(count, next(value), [...list, value]) :
+                func(count, next(value), list) :
+            list
+        return func
+    }
+
+    const inc = value => value + 1
+    const degree = (value, exponent) => 
+        exponent ? 
+        value*degree(value, exponent - 1) : 
+        1
+    const degreeTwo = exponent => degree(2, exponent)
+    const degreeThree = exponent => degree(3, exponent)
+    const naturalList = listFunc(inc)
+    const naturalEvenList = listFunc(inc, value => value % 2 == 0)
+    const naturalUnevenList = listFunc(inc, value => value % 2 > 0)
+    const degreeTwoList = listFunc(degreeTwo)
+    const degreeThreeList = listFunc(degreeThree)
+    
+    const count = 20
+   /*  logArr("Список натуральных чисел", naturalList(count))
+    logArr("Список чётных натуральных чисел", naturalEvenList(count))
+    logArr("Список нечётных натуральных чисел", naturalUnevenList(count))
+    logArr("Список степеней двойки", degreeTwoList(25))
+    logArr("Список степеней тройки", degreeThreeList(25))  */
+   
+    const random = (min, max) => (min + Math.random()*(max-min)).toFixed(2)    
+    const event = chance => () => Math.random().toFixed(2) < chance/100
+    const chance = 30
+    const event30 = event(chance)
+    const testSet = (event, size) => {
+        let set = []
+        for(let i=0; i<size; i++) {
+            set.push(event())
+        }
+        return set
+    }
+    const luckyCount = testSet => testSet.filter(value => value==true).length
+    const testCase = (event, testCount, setSize) => {
+        let result = []
+        for(let i=0; i<testCount; i++) {
+            result.push(luckyCount(testSet(event, setSize)))
+        }
+        return result
+    }
+    const avg = set => parseFloat((set.reduce((prev, avg) => avg + prev) / set.length).toFixed(2))
+
+    const testCount = 1000
+    const setSize = 3
+
+    //log(avg(testCase(event30, testCount, setSize)))
+    const res = []
+    for(let i=0; i<10; i++) {
+        res.push(avg(testCase(event30, testCount, setSize)))
+        log(res[res.length - 1])
+    }
+    log(`количество попаданий с шансом ${chance}% из ${setSize} выстрелов: ${avg(res)}`)
+</script>
+</body>
+</html>
