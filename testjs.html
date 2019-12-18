@@ -75,7 +75,7 @@
         return result
     }
     // среднее арифметическое
-    const avg = set => parseFloat((set.reduce((prev, avg) => avg + prev) / set.length).toFixed(2))
+    const avg = set => +(set.reduce((prev, sum) => sum + prev) / set.length).toFixed(2)
     //        
     const res = []
     for(let i=0; i<10; i++) {
