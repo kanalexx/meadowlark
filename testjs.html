@@ -9,6 +9,15 @@
 <body>
 <h1>Declarative Clock</h1>
 <p>Open the console to check the time.</p>
+<form name="main">
+    Шанс: <br>
+    <input id="chance" type="number" width="10" min="0" value="10"> <br>
+    Количество испытаний: <br>
+    <input id="testCount" type="number" width="10" min="0" value="100"> <br>
+    Количество попыток в испытании: <br>
+    <input id="setSize" type="number" width="10" min="0" value="10"> <br>
+    <p><input id="button" type="button" value="Посчитать"></p>
+</form>
 <script type="text/babel">
     const log = (message) => console.log(message)
     const logArr = (caption, arr) => 
@@ -52,13 +61,13 @@
         return random < chance/100
     }
     // шанс (%)
-    const chance = 1
+    //const chance = 1
     // количество испытаний
-    const testCount = 100
+    //const testCount = 100
     // количество попыток в испытании 
-    const setSize = 10
+    //const setSize = 10
     // генератор события с шансом упеха 30%
-    const event30 = event(chance)
+    const event30 = event(30)
     // тестовый набор 
     const testSet = (event, size) => {
         let set = []
@@ -78,7 +87,12 @@
         }
         return result
     }
-    log(testCase(event(chance), testCount, setSize))
+
+    button.onclick = function () {
+        console.clear()
+        log(testCase(event(chance.value), testCount.value, setSize.value))
+        //
+    }    
 /*     // среднее арифметическое
     const avg = set => +(set.reduce((prev, sum) => sum + prev) / set.length).toFixed(2)
     //        
